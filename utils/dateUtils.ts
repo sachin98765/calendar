@@ -1,9 +1,6 @@
 // Utility functions for date operations
 
-export interface DateRange {
-  start: Date | null;
-  end: Date | null;
-}
+
 
 export const getDaysInMonth = (date: Date): number => {
   return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
@@ -19,16 +16,6 @@ export const getMonthName = (monthIndex: number): string => {
     'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'
   ];
   return months[monthIndex];
-};
-
-export const getMonthShortName = (monthIndex: number): string => {
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  return months[monthIndex];
-};
-
-export const getDayName = (dayIndex: number): string => {
-  const days = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
-  return days[dayIndex];
 };
 
 export const isToday = (date: Date): boolean => {

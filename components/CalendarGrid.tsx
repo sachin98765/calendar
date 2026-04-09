@@ -17,12 +17,12 @@ interface CalendarGridProps {
     start: Date | null
     end: Date | null
   }
-  setDateRange: (range: { start: Date | null; end: Date | null }) => void
-}
-
-interface DateRange {
-  start: Date | null
-  end: Date | null
+  setDateRange: (
+    updater: (prev: { start: Date | null; end: Date | null }) => {
+      start: Date | null
+      end: Date | null
+    },
+  ) => void
 }
 
 export const CalendarGrid = ({
@@ -47,9 +47,11 @@ export const CalendarGrid = ({
       if (prev.end !== null || (prev.start !== null && prev.end === null)) {
         return { start: clickedDate, end: null }
       }
+
       if (prev.start !== null && prev.end === null) {
-        return { start: prev.start, end: clickedDate }
+        return { start: prev.start!, end: clickedDate } // ✅ FIX HERE
       }
+
       return { start: clickedDate, end: null }
     })
   }
@@ -61,18 +63,24 @@ export const CalendarGrid = ({
     const dayOfWeek = date.getDay()
     const isWeekendDay = isWeekend(dayOfWeek)
 
-    let classes = "h-8 flex items-center justify-center rounded-md transition-all duration-200 cursor-pointer text-xs font-semibold relative hover:scale-110"
+    let classes =
+      "h-8 flex items-center justify-center rounded-md transition-all duration-200 cursor-pointer text-xs font-semibold relative hover:scale-110"
 
     // 1. Check if it is the Start or End date
-    const isSelected = (dateRange.start && isSameDay(date, dateRange.start)) || 
-                       (dateRange.end && isSameDay(date, dateRange.end))
+    const isSelected =
+      (dateRange.start && isSameDay(date, dateRange.start)) ||
+      (dateRange.end && isSameDay(date, dateRange.end))
 
     if (isSelected) {
       return `${classes} text-white font-bold ring-2 ring-offset-1`
     }
 
     // 2. Check if it is in the selected range
-    if (dateRange.start && dateRange.end && isInRange(date, dateRange.start, dateRange.end)) {
+    if (
+      dateRange.start &&
+      dateRange.end &&
+      isInRange(date, dateRange.start, dateRange.end)
+    ) {
       return `${classes} bg-blue-100 text-gray-800`
     }
 
@@ -118,11 +126,11 @@ export const CalendarGrid = ({
         {weeks.map((week, weekIdx) => (
           <div key={weekIdx} className="grid grid-cols-7 gap-0.5">
             {week.map((day, dayIdx) => {
-              const date = day ? getDateFromDay(currentDate, day) : null;
-              const isSelected = date && (
-                (dateRange.start && isSameDay(date, dateRange.start)) || 
-                (dateRange.end && isSameDay(date, dateRange.end))
-              );
+              const date = day ? getDateFromDay(currentDate, day) : null
+              const isSelected =
+                date &&
+                ((dateRange.start && isSameDay(date, dateRange.start)) ||
+                  (dateRange.end && isSameDay(date, dateRange.end)))
 
               return (
                 <button
@@ -131,7 +139,11 @@ export const CalendarGrid = ({
                   disabled={day === null}
                   className={`${getDateClasses(day)} ${day === null ? "cursor-default" : ""}`}
                   style={isSelected ? { backgroundColor: accentColor } : {}}
-                  aria-label={day ? `${currentDate.toLocaleString("default", { month: "long" })} ${day}` : "empty"}
+                  aria-label={
+                    day
+                      ? `${currentDate.toLocaleString("default", { month: "long" })} ${day}`
+                      : "empty"
+                  }
                 >
                   {day}
                 </button>
