@@ -39,13 +39,7 @@ export const Calendar = () => {
     }, 300)
   }
 
-  const goToToday = () => {
-    setIsFlipping(true)
-    setTimeout(() => {
-      setCurrentDate(new Date())
-      setIsFlipping(false)
-    }, 300)
-  }
+ 
 
   const monthName = currentDate.toLocaleString("default", { month: "long" }).toUpperCase()
   const yearNumber = currentDate.getFullYear()
