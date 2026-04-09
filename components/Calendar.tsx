@@ -42,7 +42,6 @@ export const Calendar = () => {
  
 
   const monthName = currentDate.toLocaleString("default", { month: "long" }).toUpperCase()
-  const yearNumber = currentDate.getFullYear()
 
   // Calculate day difference from today
   const calculateDayDifference = (date: Date): string => {
