@@ -189,7 +189,7 @@ npm start
 Edit `components/Calendar.tsx`:
 
 ```typescript
-const [accentColor, setAccentColor] = useState("#1e88e5") // Change this color
+const [accentColor] = useState("#1e88e5") // Change this color
 ```
 
 ### Change Hero Image

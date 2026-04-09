@@ -9,7 +9,7 @@ import { addMonths } from "@/utils/dateUtils"
 
 export const Calendar = () => {
   const [currentDate, setCurrentDate] = useState<Date>(new Date())
-  const [accentColor, setAccentColor] = useState("#1e88e5")
+  const [accentColor] = useState("#1e88e5")
   const [isFlipping, setIsFlipping] = useState(false)
   const [dateRange, setDateRange] = useState<{
     start: Date | null
